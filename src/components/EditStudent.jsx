@@ -20,7 +20,7 @@ const EditStudent = () => {
     const fetchStudent = async () => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_API_BASE || 'http://localhost:5000'}/students/${id}`,
+          `${process.env.REACT_APP_API_BASE || 'https://a-2-backend-1.onrender.com'}/students/${id}`,
           { timeout: 5000 }
         );
         setStudent(response.data);
