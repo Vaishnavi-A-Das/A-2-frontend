@@ -50,7 +50,7 @@ const EditStudent = () => {
 
     try {
       const response = await axios.put(
-        `${process.env.REACT_APP_API_BASE || 'http://localhost:5000'}/students/${id}`,
+        `${process.env.REACT_APP_API_BASE || 'https://a-2-backend-1.onrender.com'}/students/${id}`,
         student,
         {
           headers: { 'Content-Type': 'application/json' },
