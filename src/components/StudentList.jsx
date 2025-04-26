@@ -14,7 +14,7 @@ const StudentList = () => {
     const fetchStudents = async () => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_API_BASE || 'http://localhost:5000'}/students`,
+          `${process.env.REACT_APP_API_BASE || 'https://a-2-backend-1.onrender.com'}/students`,
           { timeout: 5000 }
         );
         setStudents(response.data);
@@ -39,7 +39,7 @@ const StudentList = () => {
 
     try {
       await axios.delete(
-        `${process.env.REACT_APP_API_BASE || 'http://localhost:5000'}/students/${id}`,
+        `${process.env.REACT_APP_API_BASE || 'https://a-2-backend-1.onrender.com'}/students/${id}`,
         { timeout: 5000 }
       );
       setStudents(students.filter((student) => student._id !== id));
