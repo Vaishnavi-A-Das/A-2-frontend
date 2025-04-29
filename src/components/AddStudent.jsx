@@ -15,40 +15,45 @@ const AddStudent = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
-  // Debug: Verify environment variable
-  console.log('Current API Base:', process.env.REACT_APP_API_BASE);
+  const baseUrl = (process.env.REACT_APP_API_BASE || 'https://a-2-backend-1.onrender.com').replace(/\/$/, '');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setStudent(prev => ({ ...prev, [name]: value }));
+    setStudent(prev => ({
+      ...prev,
+      [name]: name === 'year' ? Number(value) : value
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
+    // Validation
+    if (student.year < 1 || student.year > 5) {
+      toast.error('Year must be between 1 and 5');
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
-      // Debug: Log the data being sent
       console.log('Submitting student data:', student);
 
       const response = await axios.post(
-        `${process.env.REACT_APP_API_BASE || 'https://a-2-backend-1.onrender.com/'}/students`,
+        `${baseUrl}/students`,
         student,
         {
           headers: {
             'Content-Type': 'application/json'
           },
-          timeout: 5000 // 5 second timeout
+          timeout: 5000
         }
       );
 
-      // Debug: Log the full response
       console.log('API Response:', response);
-
       toast.success('Student added successfully!');
       navigate('/');
     } catch (err) {
-      // Enhanced error logging
       console.error('Error details:', {
         message: err.message,
         config: err.config,
@@ -56,8 +61,8 @@ const AddStudent = () => {
       });
 
       toast.error(
-        err.response?.data?.message || 
-        err.message || 
+        err.response?.data?.message ||
+        err.message ||
         'Failed to add student'
       );
     } finally {
@@ -79,6 +84,7 @@ const AddStudent = () => {
             placeholder="Enter full name"
             required
             className="form-control"
+            disabled={isSubmitting}
           />
         </div>
 
@@ -92,6 +98,7 @@ const AddStudent = () => {
             placeholder="Enter email"
             required
             className="form-control"
+            disabled={isSubmitting}
           />
         </div>
 
@@ -105,6 +112,7 @@ const AddStudent = () => {
             placeholder="Enter course"
             required
             className="form-control"
+            disabled={isSubmitting}
           />
         </div>
 
@@ -120,6 +128,7 @@ const AddStudent = () => {
             max="5"
             required
             className="form-control"
+            disabled={isSubmitting}
           />
         </div>
 
