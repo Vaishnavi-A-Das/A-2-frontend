@@ -32,7 +32,7 @@ const AddStudent = () => {
       console.log('Submitting student data:', student);
 
       const response = await axios.post(
-        `${process.env.REACT_APP_API_BASE || 'http://localhost:5000'}/students`,
+        `${process.env.REACT_APP_API_BASE || 'https://a-2-backend-1.onrender.com/'}/students`,
         student,
         {
           headers: {
